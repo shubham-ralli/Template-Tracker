@@ -1,0 +1,17 @@
+/* tpl-style.css */
+
+.wrap {
+    position: relative;
+}
+
+
+#loader {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 10px 0;
+    color: #0073aa; /* WordPress blue color */
+}
+
+.widefat th {
+    background-color: #f1f1f1;
+}

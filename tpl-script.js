@@ -7,6 +7,17 @@ jQuery(document).ready(function ($) {
         
         $('#template-pages tbody').empty();
         $('#loader').show(); // Show loader
+        $('#error').text(''); // Clear any previous error messages
+        $('#download-csv').hide(); // Hide download button initially
+
+        // Check if a template is selected
+        if (!template) {
+            $('#loader').hide();
+            // $('#error').show();
+            $('#template-pages').hide();
+            $('#error').show().text('Please select a template before searching.');
+            return;
+        }
 
         // Fetch pages based on selected template and status
         $.ajax({
@@ -20,11 +31,12 @@ jQuery(document).ready(function ($) {
             success: function (response) {
                 $('#loader').hide(); // Hide loader
                 $('#template-pages').show(); // Show table after results are fetched
-                $('#download-csv').show(); // Show download CSV button after results are shown
+                $('#error').hide();
 
                 resultData = response; // Store response data for CSV download
 
                 if (response.length > 0) {
+                    $('#download-csv').show(); // Show download CSV button if results are found
                     var totalResults = response.length; // Count total results
                     $.each(response, function (index, page) {
                         $('#template-pages tbody').append(

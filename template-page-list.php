@@ -44,29 +44,51 @@ add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), 'sf_plugin_actio
 function tpl_render_admin_page() {
     $templates = wp_get_theme()->get_page_templates();
     ?>
-    <div class="wrap">
-        <h1>Template Tracker</h1>
-        <label for="template-select">Select a Template:</label>
-        <select id="template-select">
-            <option value="">All Templates</option>
-            <?php foreach ($templates as $template_name => $template_file) : ?>
-                <option value="<?php echo esc_html($template_name); ?>"><?php echo esc_attr($template_file); ?></option>
-            <?php endforeach; ?>
-        </select>
+<div class="template-tracker-wrap">
+    <h1>Template Tracker</h1>
 
-        <label for="status-select">Select Post Status:</label>
-        <select id="status-select">
-            <option value="">All Statuses</option>
-            <option value="publish">Published</option>
-            <option value="draft">Draft</option>
-            <option value="private">Private</option>
-            <option value="trash">Trash</option>
-        </select>
 
-        <button id="search-button" class="button">Search Posts</button>
-        <div id="loader" style="display:none;">Loading...</div>
-        
-        <table id="template-pages" class="widefat" style="display:none;">
+    <div class="template-tracker-from">
+
+    <div id="error" style="display:none;"></div>
+
+    <div class="ttm-frm-group">
+            <label for="template-select">Select a Template:</label>
+            <select id="template-select">
+                <option value="">Select a Template</option>
+                <option value="default">Default Template</option> <!-- Default Template Option -->
+                <?php foreach ($templates as $template_name => $template_file) : ?>
+                    <option value="<?php echo esc_html($template_name); ?>"><?php echo esc_attr($template_file); ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+
+
+        <div class="ttm-frm-group">
+            <label for="status-select">Select Post Status:</label>
+            <select id="status-select">
+                <option value="">All Statuses</option>
+                <option value="publish">Published</option>
+                <option value="draft">Draft</option>
+                <option value="private">Private</option>
+                <option value="trash">Trash</option>
+            </select>
+        </div>
+
+        <button id="search-button" class="button">Search Posts <div id="loader" style="display:none;"></div></button>
+
+    </div>
+
+    <div class="result" id="template-pages" style="display:none;">
+
+        <div class="result_header">
+            <div class="header_left">
+                <h3>Result</h3>
+            </div>
+            <div class="header_right"><button id="download-csv" class="button" style="display:none;">Download
+                    CSV</button></div>
+        </div>
+        <table class="widefat">
             <thead>
                 <tr>
                     <th>#</th>
@@ -80,9 +102,11 @@ function tpl_render_admin_page() {
             <tbody></tbody>
         </table>
         <p id="total-results"></p>
-        <button id="download-csv" class="button" style="display:none;">Download CSV</button>
+
+
     </div>
-    <?php
+</div>
+<?php
 }
 
 // AJAX function to fetch pages

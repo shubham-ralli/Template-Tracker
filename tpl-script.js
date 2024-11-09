@@ -1,11 +1,20 @@
 jQuery(document).ready(function ($) {
     var resultData = []; // Store result data for CSV download
+    var table; // Declare table variable to store DataTable instance
+
+    // Initialize the DataTable
+    function initializeTable() {
+        table = new DataTable('#myTable');
+    }
+
+    // Initialize table on document ready
+    initializeTable();
 
     $('#search-button').click(function () {
         var template = $('#template-select').val();
         var status = $('#status-select').val();
         
-        $('#template-pages tbody').empty();
+        $('#template-pages tbody').empty(); // Clear existing data
         $('#loader').show(); // Show loader
         $('#error').text(''); // Clear any previous error messages
         $('#download-csv').hide(); // Hide download button initially
@@ -13,7 +22,6 @@ jQuery(document).ready(function ($) {
         // Check if a template is selected
         if (!template) {
             $('#loader').hide();
-            // $('#error').show();
             $('#template-pages').hide();
             $('#error').show().text('Please select a template before searching.');
             return;
@@ -38,12 +46,26 @@ jQuery(document).ready(function ($) {
                 if (response.length > 0) {
                     $('#download-csv').show(); // Show download CSV button if results are found
                     var totalResults = response.length; // Count total results
+
+                    // Destroy existing DataTable instance before appending new data
+                    if ($.fn.DataTable.isDataTable('#myTable')) {
+                        table.destroy();
+                    }
+
+                    // Empty the table body to remove old data
+                    $('#template-pages tbody').empty();
+
+                    // Append new rows to the table
                     $.each(response, function (index, page) {
                         $('#template-pages tbody').append(
                             '<tr><td>' + page.index + '</td><td>' + page.title + '</td><td>' + page.template + '</td><td>' + page.type + '</td><td>' + page.status + '</td><td><button class="view-page button" data-url="' + page.url + '">View Page</button></td></tr>'
                         );
                     });
+
                     $('#total-results').text('Total Results: ' + totalResults); // Show total results
+
+                    // Reinitialize the DataTable after the new rows are appended
+                    initializeTable();
                 } else {
                     $('#template-pages tbody').append('<tr><td colspan="6">No pages found for this template and status.</td></tr>');
                     $('#total-results').text('Total Results: 0'); // No results found

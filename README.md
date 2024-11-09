@@ -36,6 +36,9 @@
 
 2. **Results Table**: Shows the filtered list of posts and pages with details like title, template, type, and status.
 
+![Template-Tracker-‹-imgtype-—-WordPress-11-09-2024_10_26_PM (1)](https://github.com/user-attachments/assets/09c6fde8-5b98-4ead-8d38-9353054d4eca)
+
+
 ## Frequently Asked Questions
 
 ### Can I filter posts by custom post types?

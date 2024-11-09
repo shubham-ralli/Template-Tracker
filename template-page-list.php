@@ -15,11 +15,17 @@ defined('ABSPATH') or die('No script kiddies please!');
 
 // Enqueue scripts and styles
 function tpl_enqueue_scripts() {
-    wp_enqueue_script('tpl-script', plugin_dir_url(__FILE__) . 'tpl-script.js', array('jquery'), '2.9', true);
+
+
+    wp_enqueue_script('tpl-script-table', 'https://cdn.datatables.net/2.1.8/js/dataTables.min.js', array('jquery'), '1', true);
+
+    wp_enqueue_script('tpl-script', plugin_dir_url(__FILE__) . 'tpl-script.js', array('jquery'), '1', true);
     wp_localize_script('tpl-script', 'tpl_ajax', array('ajax_url' => admin_url('admin-ajax.php')));
     
     // Enqueue admin CSS for styling
-    wp_enqueue_style('tpl-admin-style', plugin_dir_url(__FILE__) . 'css/tpl-style.css', array(), '1.0');
+    wp_enqueue_style('tpl-admin-style', plugin_dir_url(__FILE__) . 'css/tpl-style.css', array(), '1');
+
+    wp_enqueue_style('tpl-admin-style-table', 'https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css', array(), '1');
 }
 add_action('admin_enqueue_scripts', 'tpl_enqueue_scripts');
 
@@ -88,7 +94,7 @@ function tpl_render_admin_page() {
             <div class="header_right"><button id="download-csv" class="button" style="display:none;">Download
                     CSV</button></div>
         </div>
-        <table class="widefat">
+        <table class="widefat display" id="myTable">
             <thead>
                 <tr>
                     <th>#</th>
@@ -101,7 +107,7 @@ function tpl_render_admin_page() {
             </thead>
             <tbody></tbody>
         </table>
-        <p id="total-results"></p>
+        <p id="total-results" style="display:none;"></p>
 
 
     </div>

@@ -36,7 +36,7 @@
 
 2. **Results Table**: Shows the filtered list of posts and pages with details like title, template, type, and status.
 
-![Template-Tracker-‹-imgtype-—-WordPress-11-09-2024_10_26_PM (1)](https://github.com/user-attachments/assets/09c6fde8-5b98-4ead-8d38-9353054d4eca)
+![Template-Tracker-‹-imgtype-—-WordPress-11-09-2024_11_18_PM](https://github.com/user-attachments/assets/6f89b0b9-ddb8-4a05-9f63-8909b09ad1aa)
 
 
 ## Frequently Asked Questions

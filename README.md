@@ -1,47 +1,56 @@
 # Template Tracker
 
-Template Tracker is a WordPress plugin that allows users to easily view and filter posts and pages based on selected templates and post statuses. It provides a user-friendly interface within the WordPress dashboard to view a list of posts or pages that use specific templates, along with their status (published, draft, private, or trashed). Users can download the filtered list as a CSV file.
+**Template Tracker** is a WordPress plugin that allows you to filter and view posts and pages by specific templates and post statuses, directly from your WordPress dashboard. The plugin is designed to be user-friendly and provides features like CSV downloads for easy data export.
 
 ## Features
 
-- Filter posts by template and post status (Published, Draft, Private, Trash).
-- View post titles, templates, and statuses in a table.
-- Easily navigate to posts with the "View Post" link.
-- Download filtered post data as a CSV file.
+- **Filter Posts by Template and Status**: Select from available templates and post statuses (Published, Draft, Private, Trash) to filter posts or pages.
+- **Detailed Table View**: View post details in a clear, sortable table, including post titles, associated templates, types, and statuses.
+- **Direct Post Access**: Quickly access posts or pages with the "View Post" link.
+- **CSV Download**: Download the filtered post data as a CSV file for easy offline access and analysis.
 
 ## Installation
 
-1. Download the plugin zip file.
-2. Upload the zip file to your WordPress site's "Plugins" section (`Plugins > Add New > Upload Plugin`).
-3. Activate the plugin through the 'Plugins' menu in WordPress.
+1. **Download the Plugin**: Download the Template Tracker plugin zip file.
+2. **Upload to WordPress**: Go to your WordPress dashboard, navigate to `Plugins > Add New > Upload Plugin`, and upload the downloaded zip file.
+3. **Activate the Plugin**: Once uploaded, activate the plugin from the 'Plugins' menu.
 
 ## Usage
 
-1. Go to `Tools > Template Tracker` in your WordPress dashboard.
-2. Select a template from the dropdown to filter posts by template.
-3. Choose a post status to further filter by status.
-4. Click "Search Posts" to view results in the table below.
-5. Click "Download CSV" to download the displayed results in a CSV format.
+1. **Access Template Tracker**: After activation, go to `Tools > Template Tracker` in your WordPress dashboard.
+2. **Filter by Template**:
+   - Use the "Select a Template" dropdown to choose a template. This allows you to filter posts or pages that use the chosen template.
+3. **Filter by Post Status**:
+   - Choose a status from the "Select Post Status" dropdown. Options include Published, Draft, Private, and Trash.
+4. **View Filtered Results**:
+   - Click the "Search Posts" button to view results based on your selected filters. Results will appear in a table displaying post title, template name, post type, and status.
+5. **Download Results as CSV**:
+   - Click "Download CSV" to save the filtered post data as a CSV file.
 
 ## Screenshots
 
-1. **Admin Interface** - Template Tracker settings and controls.
-2. **Results Table** - Filtered results based on template and status.
+1. **Admin Interface**: View of Template Tracker settings and controls within the WordPress dashboard.
+2. **Results Table**: Shows the filtered list of posts and pages with details like title, template, type, and status.
 
 ## Frequently Asked Questions
 
-### Can I filter by custom post types?
-Yes, Template Tracker allows filtering across multiple post types.
+### Can I filter posts by custom post types?
+Yes, Template Tracker allows filtering across multiple post types, including any custom post types registered in your WordPress installation.
 
-### What post statuses can I filter by?
-You can filter by Published, Draft, Private, and Trash statuses.
+### What post statuses are supported for filtering?
+You can filter posts by Published, Draft, Private, and Trash statuses.
 
-### Can I download the results?
-Yes, after filtering, you can download the results as a CSV file by clicking the "Download CSV" button.
+### Can I download the results after filtering?
+Yes, once you’ve filtered your results, you can download the displayed data as a CSV file by clicking the "Download CSV" button.
 
 ## Changelog
 
 ### 1.0.0
 - Initial release of Template Tracker.
-- Added functionality for template and post status filters.
-- Added CSV download feature.
+- Added template and post status filter functionality.
+- Included a table view for displaying filtered post data.
+- Enabled CSV download for filtered results.
+
+## License
+
+This plugin is open-source and licensed under the GPLv2 or later.

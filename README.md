@@ -30,6 +30,10 @@
 ## Screenshots
 
 1. **Admin Interface**: View of Template Tracker settings and controls within the WordPress dashboard.
+
+![Template-Tracker-‹-imgtype-—-WordPress-11-09-2024_10_26_PM](https://github.com/user-attachments/assets/6023d456-6ed4-47e6-b19f-02557c6a1814)
+
+
 2. **Results Table**: Shows the filtered list of posts and pages with details like title, template, type, and status.
 
 ## Frequently Asked Questions

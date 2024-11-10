@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:       Template Tracker
- * Version:           1.0.0
+ * Version:           1.2.0
  * Plugin URI:        https://github.com/shubham-ralli/template-tracker
  * Description:       Displays a list of posts based on the selected template and status.
  * Author:            Shubham Ralli
@@ -164,7 +164,7 @@ function tpl_fetch_pages() {
 
     if ($status) {
         $args['post_status'] = $status;
-    }else {
+    } else {
         $args['post_status'] = array('publish', 'draft', 'private', 'trash');
     }
 

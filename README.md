@@ -1,6 +1,6 @@
 # Template Tracker
 
-**Template Tracker** is a simple WordPress plugin that allows you to filter and view posts and pages based on their templates, post statuses, authors, categories, and date ranges directly from the WordPress dashboard. It provides a user-friendly interface with options to export filtered data as a CSV file for offline access.
+**Template Tracker** is a simple WordPress plugin that allows you to filter and view posts and pages based on their templates, post statuses, authors, and date ranges directly from the WordPress dashboard. It provides a user-friendly interface with options to export filtered data as a CSV file for offline access.
 
 ## Features
 

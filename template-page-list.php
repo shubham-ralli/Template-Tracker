@@ -17,12 +17,12 @@ defined('ABSPATH') or die('No script kiddies please!');
 function tpl_enqueue_scripts() {
 
     // Enqueue DataTables script and CSS from local files
-    wp_enqueue_script('tpl-script-table', plugin_dir_url(__FILE__) . 'js/dataTables.min.js', array('jquery'), '2.1.8', true);
+    wp_enqueue_script('tpl-script-table', plugin_dir_url(__FILE__) . 'js/dataTables.min.js', array('jquery'), '2.1.9', true);
     wp_enqueue_style('tpl-admin-style-table', plugin_dir_url(__FILE__) . 'css/dataTables.dataTables.min.css', array(), '2.1.8');
 
-    wp_enqueue_script('tpl-script', plugin_dir_url(__FILE__) . 'js/tpl-script.js', array('jquery'), '3', true);
+    wp_enqueue_script('tpl-script', plugin_dir_url(__FILE__) . 'js/tpl-script.js', array('jquery'), '3.1', true);
     wp_localize_script('tpl-script', 'tpl_ajax', array('ajax_url' => admin_url('admin-ajax.php'), 'nonce' => wp_create_nonce('tpl_nonce')));
-    wp_enqueue_style('tpl-admin-style', plugin_dir_url(__FILE__) . 'css/tpl-style.css', array(), '2.1');
+    wp_enqueue_style('tpl-admin-style', plugin_dir_url(__FILE__) . 'css/tpl-style.css', array(), '2.4');
 }
 add_action('admin_enqueue_scripts', 'tpl_enqueue_scripts');
 
@@ -43,11 +43,16 @@ add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), 'sf_plugin_actio
 // Render the admin page
 function tpl_render_admin_page() {
     $templates = wp_get_theme()->get_page_templates();
+    $authors = get_users();
+    $categories = get_categories();
+
     ?>
     <div class="template-tracker-wrap">
         <h1>Template Tracker</h1>
         <div class="template-tracker-from">
             <div id="error" style="display:none;"></div>
+
+            <div class="ttm-row">
             <div class="ttm-frm-group">
                 <label for="template-select">Select a Template:</label>
                 <select id="template-select">
@@ -68,6 +73,39 @@ function tpl_render_admin_page() {
                     <option value="trash">Trash</option>
                 </select>
             </div>
+                    </div>
+
+                    <div class="ttm-row">
+            <div class="ttm-frm-group">
+                <label for="author-select">Select Author:</label>
+                <select id="author-select">
+                    <option value="">All Authors</option>
+                    <?php foreach ($authors as $author) : ?>
+                        <option value="<?php echo esc_html($author->ID); ?>"><?php echo esc_html($author->display_name); ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            
+            <div class="ttm-frm-group">
+                <label for="date-start">Select Date Range:</label>
+                <div class="ttm-date-flex">
+                <input type="date" id="date-start" placeholder="Start Date">
+                <input type="date" id="date-end" placeholder="End Date">
+                    </div>
+            </div>
+
+
+            <div class="ttm-frm-group" style="display:none;">
+                <label for="category-select">Select Category:</label>
+                <select id="category-select">
+                    <option value="">All Categories</option>
+                    <?php foreach ($categories as $category) : ?>
+                        <option value="<?php echo esc_html($category->term_id); ?>"><?php echo esc_html($category->name); ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+
+                    </div>
             <button id="search-button" class="button">Search Posts <div id="loader" style="display:none;"></div></button>
         </div>
         <div class="result" id="template-pages" style="display:none;">
@@ -101,10 +139,15 @@ function tpl_fetch_pages() {
     // Check nonce for security
     check_ajax_referer('tpl_nonce', 'nonce');
 
-    // Check if template and status are set, then sanitize and unslash
+    // Get POST data and sanitize
     $template = isset($_POST['template']) ? sanitize_text_field(wp_unslash($_POST['template'])) : '';
     $status = isset($_POST['status']) ? sanitize_text_field(wp_unslash($_POST['status'])) : '';
+    $author = isset($_POST['author']) ? intval($_POST['author']) : '';
+    $category = isset($_POST['category']) ? intval($_POST['category']) : '';
+    $date_start = isset($_POST['date_start']) ? sanitize_text_field(wp_unslash($_POST['date_start'])) : '';
+    $date_end = isset($_POST['date_end']) ? sanitize_text_field(wp_unslash($_POST['date_end'])) : '';
 
+    // Set up query arguments
     $args = array(
         'post_type' => 'any',
         'posts_per_page' => -1,
@@ -121,23 +164,50 @@ function tpl_fetch_pages() {
 
     if ($status) {
         $args['post_status'] = $status;
-    } else {
+    }else {
         $args['post_status'] = array('publish', 'draft', 'private', 'trash');
     }
 
-    $pages = get_posts($args);
-    $output = array();
+    if ($author) {
+        $args['author'] = $author;
+    }
 
-    foreach ($pages as $index => $page) {
-        $output[] = array(
-            'index' => $index + 1,
-            'title' => $page->post_title,
-            'template' => get_post_meta($page->ID, '_wp_page_template', true),
-            'type' => $page->post_type,
-            'status' => $page->post_status,
-            'url' => get_permalink($page->ID)
+    if ($category) {
+        $args['category'] = $category;
+    }
+
+    if ($date_start) {
+        $args['date_query'] = array(
+            array(
+                'after' => $date_start,
+            ),
         );
     }
-    wp_send_json($output);
+
+    if ($date_end) {
+        $args['date_query'][] = array(
+            'before' => $date_end,
+        );
+    }
+
+    // Query posts
+    $posts = get_posts($args);
+
+    // Prepare result array
+    $result = array();
+    foreach ($posts as $index => $post) {
+        $result[] = array(
+            'index' => $index + 1,
+            'title' => $post->post_title,
+            'template' => get_post_meta($post->ID, '_wp_page_template', true),
+            'type' => get_post_type($post),
+            'status' => $post->post_status,
+            'url' => get_permalink($post->ID),
+        );
+    }
+
+    // Return results as JSON
+    wp_send_json($result);
 }
+
 add_action('wp_ajax_tpl_fetch_pages', 'tpl_fetch_pages');

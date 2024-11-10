@@ -16,12 +16,16 @@ jQuery(document).ready(function ($) {
     $('#search-button').click(function () {
         var template = $('#template-select').val();
         var status = $('#status-select').val();
+        var author = $('#author-select').val();
+        var category = $('#category-select').val();
+        var dateStart = $('#date-start').val();
+        var dateEnd = $('#date-end').val();
         
         $('#template-pages tbody').empty(); // Clear existing data
         $('#loader').show(); // Show loader
         $('#error').hide().text(''); // Clear any previous error messages
         $('#download-csv').hide(); // Hide download button initially
-
+    
         // Check if a template is selected
         if (!template) {
             $('#loader').hide();
@@ -29,7 +33,7 @@ jQuery(document).ready(function ($) {
             $('#error').show().text('Please select a template before searching.');
             return;
         }
-
+    
         // Fetch pages based on selected template and status
         $.ajax({
             url: tpl_ajax.ajax_url,
@@ -39,36 +43,40 @@ jQuery(document).ready(function ($) {
                 action: 'tpl_fetch_pages',
                 template: template,
                 status: status,
+                author: author,
+                category: category,
+                date_start: dateStart,
+                date_end: dateEnd,
                 nonce: tpl_ajax.nonce // Include nonce for security
             },
             success: function (response) {
                 $('#loader').hide(); // Hide loader
                 $('#template-pages').show(); // Show table after results are fetched
                 $('#error').hide();
-
+    
                 resultData = response; // Store response data for CSV download
-
+    
                 if (response.length > 0) {
                     $('#download-csv').show(); // Show download CSV button if results are found
                     var totalResults = response.length; // Count total results
-
+    
                     // Destroy existing DataTable instance before appending new data
                     if ($.fn.DataTable.isDataTable('#myTable')) {
                         table.destroy();
                     }
-
+    
                     // Empty the table body to remove old data
                     $('#template-pages tbody').empty();
-
+    
                     // Append new rows to the table
                     $.each(response, function (index, page) {
                         $('#template-pages tbody').append(
                             '<tr><td>' + page.index + '</td><td>' + page.title + '</td><td>' + page.template + '</td><td>' + page.type + '</td><td>' + page.status + '</td><td><button class="view-page button" data-url="' + page.url + '">View Page</button></td></tr>'
                         );
                     });
-
+    
                     $('#total-results').text('Total Results: ' + totalResults); // Show total results
-
+    
                     // Reinitialize the DataTable after the new rows are appended
                     initializeTable();
                 } else {
@@ -84,7 +92,7 @@ jQuery(document).ready(function ($) {
             }
         });
     });
-
+    
     // Event delegation for View Page buttons
     $(document).on('click', '.view-page', function () {
         var pageUrl = $(this).data('url');

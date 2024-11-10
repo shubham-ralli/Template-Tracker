@@ -2,13 +2,13 @@
 Contributors: shubhamralli
 Tags: WordPress, template tracker, post status filter, CSV export, post filter
 Requires at least: 5.0
-Tested up to: 6.3
+Tested up to: 6.6
 Requires PHP: 7.2
 Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Template Tracker allows you to filter and view posts by selected templates and post statuses. Export the filtered data in a downloadable CSV format for easy access.
+Easily filter and export posts by template and status for streamlined content management and analysis.
 
 == Description ==
 

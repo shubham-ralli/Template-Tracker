@@ -8,7 +8,7 @@
  * Author URI:        https://github.com/shubham-ralli
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       template-tracker-main
+ * Text Domain:       template-tracker
  */
 
 defined('ABSPATH') or die('No script kiddies please!');

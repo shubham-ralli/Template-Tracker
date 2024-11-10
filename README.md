@@ -51,16 +51,13 @@
 - **Can I download the results after filtering?**
   - Yes, you can download the filtered post data as a CSV file by clicking the "Download CSV" button after applying the filter.
 
-- **Can I filter posts by author or category?**
-  - Yes, Template Tracker includes options to filter by specific authors or categories for more targeted results.
-
 - **Can I specify a date range for filtering?**
   - Yes, you can specify a start and end date to filter posts created within a certain date range.
 
 ## Changelog
 
 ### 1.2.0
-- Added filters for author, category, and date range.
+- Added filters for author, and date range.
 - Enhanced table view with more filtering capabilities.
 - Updated CSV download feature to include new filters.
 
